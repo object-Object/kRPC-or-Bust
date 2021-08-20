@@ -30,7 +30,7 @@ vessel.auto_pilot.wait()
 
 utils.log(conn, "Deorbiting.")
 vessel.control.throttle = 1
-while periapsis() > 20000:
+while periapsis() > 30000:
 	time.sleep(settings.wait_sleep)
 vessel.control.throttle = 0
 time.sleep(0.5)

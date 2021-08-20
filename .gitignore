@@ -1,3 +1,4 @@
 /.vscode
 /run.bat
 /__pycache__
+*.json

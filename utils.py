@@ -1,6 +1,4 @@
-import math
-import time
-import settings
+import math, time, settings, krpc
 
 def _get_apoapsis_circularize_dv(orbit):
 	mu = orbit.body.gravitational_parameter
@@ -10,6 +8,15 @@ def _get_apoapsis_circularize_dv(orbit):
 	v1 = math.sqrt(mu*((2./r)-(1./a1)))
 	v2 = math.sqrt(mu*((2./r)-(1./a2)))
 	return v2 - v1
+
+def get_periapsis_circularize_dv(orbit):
+	mu = orbit.body.gravitational_parameter
+	r = orbit.periapsis
+	a1 = orbit.semi_major_axis
+	a2 = r
+	v1 = math.sqrt(mu*((2./r)-(1./a1)))
+	v2 = math.sqrt(mu*((2./r)-(1./a2)))
+	return v1 - v2
 
 def _get_hohmann_dv(orbit, target_altitude):
 	mu = orbit.body.gravitational_parameter
@@ -77,6 +84,12 @@ def get_burn_time(vessel, dv):
 	flow_rate = F / Isp
 	return (m0 - m1) / flow_rate
 
+def get_dv_of_burn(vessel, burn_time):
+	F = vessel.available_thrust
+	v_e = vessel.specific_impulse * 9.82
+	m0 = vessel.mass
+	return -v_e * math.log(1 - (burn_time*F)/(m0*v_e))
+
 def clamp(n, smallest, largest):
 	return max(smallest, min(n, largest))
 
@@ -97,9 +110,19 @@ def vec_project(v, r):
 	"""Return the length of v projected onto r."""
 	return vec_dot(vec_normalize(r), v)
 
-def log(conn, content):
+def vec_sum(v1, v2):
+	return (v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2])
+
+def vec_difference(v1, v2):
+	"""v1 - v2"""
+	return (v1[0] - v2[0], v1[1] - v2[1], v1[2] - v2[2])
+
+def vec_scalar_mult(k, v):
+	return (k*v[0], k*v[1], k*v[2])
+
+def log(conn, content, duration=5):
 	print(content)
-	conn.ui.message(content, duration=4, position=conn.ui.MessagePosition.top_right)
+	conn.ui.message(content, duration=duration, position=conn.ui.MessagePosition.top_right)
 
 def execute_node(conn, vessel, node, stop_condition=None):
 	with conn.stream(getattr, node, "time_to") as time_to, conn.stream(getattr, node, "remaining_delta_v") as remaining_dv:
@@ -195,3 +218,32 @@ def warp_to_altitude(conn, vessel, altitude):
 	true_anomaly = vessel.orbit.true_anomaly_at_radius(vessel.orbit.body.equatorial_radius+altitude)
 	ut = min(vessel.orbit.ut_at_true_anomaly(true_anomaly), vessel.orbit.ut_at_true_anomaly(-true_anomaly))
 	conn.space_center.warp_to(ut)
+
+def seconds_to_hms(seconds):
+	m, s = divmod(int(seconds), 60)
+	h, m = divmod(m, 60)
+	return f"{h:d}:{m:02d}:{s:02d}"
+
+def get_next_orbit_in_soi(orbit, body):
+    time_to_orbit = 0
+    while orbit is not None:
+        try:
+            if orbit.body == body:
+                break
+            time_to_orbit += (orbit.time_to_soi_change if not math.isnan(orbit.time_to_soi_change) else 0)
+        except krpc.error.RPCError:
+            pass
+        orbit = orbit.next_orbit
+    return (orbit, time_to_orbit)
+
+def set_node_burn(node, burn_vector, delta_v):
+    node.prograde = burn_vector[1]
+    node.normal = burn_vector[2]
+    node.radial = -burn_vector[0]
+    node.delta_v = delta_v
+
+def add_node_with_burn(control, ut, burn_vector, delta_v):
+    """burn_vector should be in an orbital reference frame"""
+    node = control.add_node(ut)
+    set_node_burn(node, burn_vector, delta_v)
+    return node

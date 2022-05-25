@@ -35,7 +35,7 @@ if __name__ == '__main__':
     node.remove()
     
     # create nodes to approximate a long burn
-    node_burn_times = [total_burn_time/32]*2 + [total_burn_time/16]*3 + [total_burn_time/8]*6
+    node_burn_times = [total_burn_time/128]*2 + [total_burn_time/64]*1 + [total_burn_time/32]*1 + [total_burn_time/16]*3 + [total_burn_time/8]*6
     time_to_current_node = 60 # put the first node 1 minute + burn time away
     cumulative_velocity = vessel.velocity(target.orbit.body.non_rotating_reference_frame)
     cumulative_burn_time = 0

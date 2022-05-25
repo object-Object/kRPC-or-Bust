@@ -90,6 +90,12 @@ def get_dv_of_burn(vessel, burn_time):
 	m0 = vessel.mass
 	return -v_e * math.log(1 - (burn_time*F)/(m0*v_e))
 
+def get_braking_distance(vessel, speed):
+	m0 = vessel.mass
+	v_e = vessel.specific_impulse * 9.82
+	F = vessel.available_thrust
+	return 0.5 * speed * ( m0 * (1 - math.exp(-speed/v_e)) * v_e ) / F
+
 def clamp(n, smallest, largest):
 	return max(smallest, min(n, largest))
 

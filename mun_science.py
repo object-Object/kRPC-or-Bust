@@ -11,7 +11,7 @@ vessel.control.sas = True
 vessel.control.rcs = False
 
 utils.log(conn, "Waiting for Munar periapsis.")
-conn.space_center.warp_to(conn.space_center.ut+vessel.orbit.next_orbit.time_to_periapsis)
+conn.space_center.warp_to(conn.space_center.ut+vessel.orbit.time_to_soi_change+vessel.orbit.next_orbit.time_to_periapsis)
 
 for experiment in vessel.parts.experiments:
 	utils.log(conn, f"Running {experiment.part.title}.")

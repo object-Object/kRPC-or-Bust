@@ -3,7 +3,7 @@ Flight control software for rockets and torchships in KSP.
 
 ## About this repo
 
-The goal of this repo was to see how far I could get in Kerbal Space Program with a fully autonomous rocket — no manual controls at all. I later added some scripts to help control torchships.
+The goal of this project was to see how far I could get in Kerbal Space Program with a fully autonomous rocket — no manual controls at all. I later added some scripts to help control torchships.
 
 Please keep in mind that some of these scripts are very old, and I've learned a lot about software best practices and proper Python formatting since then.
 

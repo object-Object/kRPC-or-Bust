@@ -1,8 +1,8 @@
 import time
 
 import krpc
-import settings
-import utils
+
+from common import utils
 
 # Connection setup
 conn = krpc.connect()

@@ -11,9 +11,9 @@ import time
 
 import gravturn_worker
 import krpc
-import settings
-import utils
 from krpc.platform import NAN
+
+from common import settings, utils
 
 # turn_start_speed, turn_start_pitch, target_apoapsis, apoapsis_margin, num_srb_stages, has_fairing, has_payload
 # ships = {

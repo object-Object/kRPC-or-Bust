@@ -1,9 +1,8 @@
-import math
-import sys
 import time
 
 import krpc
-import utils
+
+from common import utils
 
 if __name__ == "__main__":
     # flip_margin = 200 # s

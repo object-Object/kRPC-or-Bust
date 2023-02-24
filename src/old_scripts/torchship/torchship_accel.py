@@ -1,7 +1,8 @@
 import sys
 
 import krpc
-import utils
+
+from common import utils
 
 
 def get_coast_time(distance, first_burn_dv, first_burn_time):

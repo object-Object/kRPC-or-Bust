@@ -3,7 +3,8 @@ import sys
 import time
 
 import krpc
-import utils
+
+from common import utils
 
 
 def wait_for_flip(conn, vessel, target, target_is_body, lead_time, message):

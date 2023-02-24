@@ -1,7 +1,8 @@
 import sys
 
 import krpc
-import utils
+
+from common import utils
 
 if __name__ == "__main__":
     conn = krpc.connect()

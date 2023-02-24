@@ -1,5 +1,6 @@
 import krpc
-import utils
+
+from common import utils
 
 # Connection setup
 conn = krpc.connect()

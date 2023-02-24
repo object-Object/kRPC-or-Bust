@@ -1,10 +1,9 @@
 # Assumes the active stage has an engine and the next stage has a parachute and optional decoupler
 import time
-from enum import auto
 
 import krpc
-import settings
-import utils
+
+from common import settings, utils
 
 # Connection setup
 conn = krpc.connect()

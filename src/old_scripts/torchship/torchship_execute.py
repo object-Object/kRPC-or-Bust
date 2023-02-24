@@ -1,7 +1,8 @@
 import time
 
 import krpc
-import utils
+
+from common import utils
 
 
 def wait_for_dv(conn, node, fraction):

@@ -2,6 +2,7 @@ import math
 import time
 
 import krpc
+import krpc.error
 import settings
 
 

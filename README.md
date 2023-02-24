@@ -1,6 +1,15 @@
 # kRPC-or-Bust
 Flight control software for rockets and torchships in KSP.
 
+## Setup
+
+* Create a venv
+* Run `pip install -r requirements.txt`
+* Download [kRPC v1.0-beta-1](https://github.com/nullprofile/krpc/releases/tag/v1.0-beta-1) from nullprofile's fork
+* Put `GameData/kRPC` in your KSP GameData folder
+* Extract the folder in `client/krpc-python-x.zip` somewhere (the extracted folder should directly contain `setup.py`, etc.)
+* Run `pip install path/to/extracted/folder`
+
 ## About this repo
 
 The goal of this project was to see how far I could get in Kerbal Space Program with a fully autonomous rocket — no manual controls at all. I later added some scripts to help control torchships.

@@ -1,4 +1,8 @@
-import krpc, utils, time
+import time
+
+import krpc
+import utils
+
 
 def wait_for_dv(conn, node, fraction):
     total_dv = node.delta_v
@@ -7,7 +11,8 @@ def wait_for_dv(conn, node, fraction):
             while remaining_dv() / total_dv > fraction:
                 remaining_dv.wait()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     conn = krpc.connect()
     vessel = conn.space_center.active_vessel
     control = vessel.control
@@ -19,7 +24,9 @@ if __name__ == '__main__':
     time.sleep(5)
 
     utils.log(conn, "Warping to start of burn.")
-    conn.space_center.warp_to(control.nodes[0].ut - utils.get_burn_time(vessel, control.nodes[0].delta_v)/2 - 3)
+    conn.space_center.warp_to(
+        control.nodes[0].ut - utils.get_burn_time(vessel, control.nodes[0].delta_v) / 2 - 3
+    )
     time.sleep(3)
 
     utils.log(conn, "Starting burn. You can enable thrust warp now.")
@@ -28,7 +35,7 @@ if __name__ == '__main__':
     while len(control.nodes) > 1:
         wait_for_dv(conn, control.nodes[0], 0.05)
         control.nodes[0].remove()
-    
+
     wait_for_dv(conn, control.nodes[0], 0.5)
 
     control.throttle = 0

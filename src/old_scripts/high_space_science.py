@@ -1,8 +1,9 @@
 # Assumes the active stage has an engine
-import krpc
 import time
-import utils
+
+import krpc
 import settings
+import utils
 
 # Connection setup
 conn = krpc.connect()
@@ -25,7 +26,7 @@ vessel.auto_pilot.wait()
 utils.log(conn, "Raising apoapsis.")
 vessel.control.throttle = 1
 while apoapsis() < space_high + 2000:
-	time.sleep(settings.wait_sleep)
+    time.sleep(settings.wait_sleep)
 vessel.control.throttle = 0
 vessel.auto_pilot.disengage()
 vessel.control.sas = True
@@ -35,8 +36,8 @@ time.sleep(settings.warp_sleep)
 utils.warp_to_altitude(conn, vessel, space_high)
 
 for experiment in vessel.parts.experiments:
-	utils.log(conn, f"Running {experiment.part.title}.")
-	experiment.run()
+    utils.log(conn, f"Running {experiment.part.title}.")
+    experiment.run()
 
 time.sleep(2)
 vessel.parts.modules_with_name("ModuleScienceContainer")[0].set_action("Collect All")

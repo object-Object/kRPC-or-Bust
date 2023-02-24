@@ -1,5 +1,6 @@
-import krpc
 import time
+
+import krpc
 
 conn = krpc.connect()
 vessel = conn.space_center.active_vessel
@@ -23,7 +24,7 @@ print("Launched.")
 
 print("Waiting to gain altitude...")
 while altitude() < 3100 or speed() > 90:
-	time.sleep(0.1)
+    time.sleep(0.1)
 
 # run_experiments = []
 # for experiment in experiments:

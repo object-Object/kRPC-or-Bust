@@ -1,7 +1,14 @@
-# these types ONLY exist as stubs until runtime so this error isn't helpful
+# these types ONLY exist as stubs so this error isn't helpful
 # pyright: reportMissingModuleSource = false
 
-from krpc.spacecenter import SpaceCenter
+from typing import TYPE_CHECKING
+
+from ._Stub import Stub
+
+if TYPE_CHECKING:
+    from krpc.spacecenter import SpaceCenter
+else:
+    SpaceCenter = Stub()
 
 # Built-in types
 

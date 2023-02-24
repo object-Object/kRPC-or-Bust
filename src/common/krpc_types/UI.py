@@ -1,7 +1,14 @@
-# these types ONLY exist as stubs until runtime so this error isn't helpful
+# these types ONLY exist as stubs so this error isn't helpful
 # pyright: reportMissingModuleSource = false
 
-from krpc.ui import UI
+from typing import TYPE_CHECKING
+
+from ._Stub import Stub
+
+if TYPE_CHECKING:
+    from krpc.ui import UI
+else:
+    UI = Stub()
 
 # Built-in types
 

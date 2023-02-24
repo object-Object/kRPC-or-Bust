@@ -6,14 +6,14 @@ import json
 import math
 import multiprocessing
 import os
-import queue
 import time
 
-import gravturn_worker
 import krpc
 from krpc.platform import NAN
 
 from common import settings, utils
+
+from . import gravturn_worker
 
 # turn_start_speed, turn_start_pitch, target_apoapsis, apoapsis_margin, num_srb_stages, has_fairing, has_payload
 # ships = {
